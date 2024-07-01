@@ -224,18 +224,6 @@ body {
   grid-area: f;
 }
 
-@media (min-width: 844px) {
-  .properties--2 {
-    display: block;
-  }
-}
-
-@media (min-width: 1454px) {
-  .properties--3 {
-    display: block;
-  }
-}
-
 .properties__item {
   border-bottom: solid 1px #C7C7C7;
 }

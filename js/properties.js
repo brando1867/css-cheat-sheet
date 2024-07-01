@@ -7550,9 +7550,9 @@
   open();
 
   search.addEventListener('input', e => {
-    for (let i = 0; i <= 5; i++) {
-      propertiesList[i].innerHTML = '';
-    }
+    propertiesList.forEach(item => {
+      item.innerHTML = '';
+    });
 
     index = 0;
 
