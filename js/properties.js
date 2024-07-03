@@ -7537,6 +7537,7 @@
   let timer;
   let col = Array.from(document.querySelectorAll('.col')).slice().reverse().find(col => getComputedStyle(col).display !== 'none')
   const propetiesDiv = document.querySelector('.properties');
+  const currentWidth = window.innerWidth;
   
   column();
 
@@ -7550,6 +7551,11 @@
   });
 
   window.addEventListener('resize', e => {
+    // 横幅が変わった時のみ処理を実行させるためのもの
+    if (currentWidth === window.innerWidth) {
+      return;
+    }
+
     //直前のタイマーをキャンセル
     clearTimeout(timer);
 
