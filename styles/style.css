@@ -119,6 +119,7 @@ body {
 
 .search__input:focus {
   all: unset;
+  font-size: 16px;
 }
 
 @media (min-width: 1048px) {
@@ -260,6 +261,7 @@ body {
   font-weight: 550;
   font-size: 14px;
   padding: 3px 7px;
+  position: relative;
 }
 
 .properties__link:hover {

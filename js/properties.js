@@ -7642,17 +7642,25 @@
 
   // プロパティを開く
   function open() {
-    const properties__item = document.querySelectorAll('.properties__item');
+    const properties__inner = document.querySelectorAll('.properties__inner');
+    const properties__link = document.querySelectorAll('.properties__link');
   
-    properties__item.forEach(item => {
+    properties__inner.forEach(item => {
       item.addEventListener('click', e => {
-        // クリックされたproperties__item要素を取得
-        const clickedItem = e.currentTarget;
+        // クリックされたproperties__inner要素を取得
+        const clickedItem = e.currentTarget.parentNode;
         
         // 子要素のproperties__detailを取得
         const detailElement = clickedItem.querySelector('.properties__detail');
     
         clickedItem.classList.toggle('open');
+      });
+    });
+  
+    // 伝播防止
+    properties__link.forEach(item => {
+      item.addEventListener('click', e => {
+        e.stopPropagation();
       });
     });
   }
