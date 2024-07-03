@@ -7530,50 +7530,117 @@
       "inheritance": false
     }
   ];
-  const propertiesList = document.querySelectorAll('.properties');
+
   const src = 'images/Group 1.svg';
   const search = document.querySelector('.search__input');
   let filteredProperties = properties;
-  let index = 0;
+  let timer;
+  let col = Array.from(document.querySelectorAll('.col')).slice().reverse().find(col => getComputedStyle(col).display !== 'none')
+  const propetiesDiv = document.querySelector('.properties');
   
-  filteredProperties.forEach(property => {
-    
-    const limit = Object.keys(properties).length / 6;
-
-    createPropertyElement(property, index);
-
-    if (propertiesList[index].childElementCount === limit) {
-      index++;
-    }
-  }); 
-
-  open();
+  column();
 
   search.addEventListener('input', e => {
-    propertiesList.forEach(item => {
-      item.innerHTML = '';
-    });
-
-    index = 0;
-
+    // フィルタリングする
     filteredProperties = properties.filter(property => {
       return property.name.startsWith(e.target.value.toLowerCase()); 
     });
 
-    filteredProperties.forEach(property => {
-    
-      const limit = Object.keys(filteredProperties).length / 6;
-  
-      createPropertyElement(property, index);
-  
-      if (propertiesList[index].childElementCount === limit) {
-        index++;
-      }
-    }); 
-
-    open();
+    column();
   });
 
+  window.addEventListener('resize', e => {
+    //直前のタイマーをキャンセル
+    clearTimeout(timer);
+
+    timer = setTimeout(column, 300);
+  });
+
+  function column() {
+    col = Array.from(document.querySelectorAll('.col')).slice().reverse().find(col => getComputedStyle(col).display !== 'none')
+      const colNum = col.dataset.col;
+      const propetiesDivChildren = propetiesDiv.children;
+
+      Array.from(propetiesDivChildren).forEach((item, key) => {
+        if ((key + 1) > 1) item.remove();
+      });
+  
+      if (colNum === "1") {
+        append();
+      }
+  
+      if (colNum === "2") {
+        const ul2 = document.createElement('ul');
+        ul2.classList.add('properties__item-parent');
+        propetiesDiv.appendChild(ul2);
+
+        append();
+      }
+  
+      if (colNum === "3") {
+        const ul2 = document.createElement('ul');
+        ul2.classList.add('properties__item-parent');
+        propetiesDiv.appendChild(ul2);
+        const ul3 = document.createElement('ul');
+        ul3.classList.add('properties__item-parent');
+        propetiesDiv.appendChild(ul3);
+
+        append();
+      }
+
+      open();
+  }
+
+  // 配列を分割する関数
+  function splitArray(array, col) {
+      // 配列の長さを取得
+      const length = array.length;
+      // 各部分の長さを計算
+      const partLength = Math.ceil(length / col);
+
+    const splitedArray = [];
+      
+      // 配列を分割
+      for (let i = 1; i <= col; i++) {
+          splitedArray.push(array.slice(partLength * (i - 1), partLength * i));
+      }
+
+      return splitedArray;
+  }
+
+  // 要素が非表示かどうか
+  function isHidden(element) {
+    if (!element || !(element instanceof Element)) {
+      return false;
+    }
+
+    const style = window.getComputedStyle(element);
+    const displayValue = style.getPropertyValue('display');
+
+    return (displayValue === 'none')
+  }
+
+  // プロパティリストを挿入
+  function append() {
+    const propertiesList = Array.from(document.querySelectorAll('.properties__item-parent'));
+    const propertiesListNum = propertiesList.length;
+    let index = 0;
+    const limit = Math.ceil(filteredProperties.length / propertiesListNum);
+
+    propertiesList.forEach(item => {
+      item.innerHTML = '';
+    });
+
+    filteredProperties.forEach(property => {
+      createPropertyElement(propertiesList[index], property);
+
+      if (limit === propertiesList[index].childElementCount) {
+        index++;
+      };
+    });
+  }
+
+  // プロパティを開く
   function open() {
     const properties__item = document.querySelectorAll('.properties__item');
   
@@ -7586,13 +7653,11 @@
         const detailElement = clickedItem.querySelector('.properties__detail');
     
         clickedItem.classList.toggle('open');
-  
-        console.log('fire');
       });
     });
   }
 
-  function createPropertyElement(property, index) {
+  function createPropertyElement(propertiesList, property) {
     // <li class="properties__item"> を作成する
     const listItem = document.createElement('li');
     listItem.classList.add('properties__item');
@@ -7765,9 +7830,6 @@
     inheritanceExplanation.textContent = property.inheritance ? 'あり' : 'なし';
     inheritanceItem.appendChild(inheritanceExplanation);
 
-
-    // propertiesList.appendChild(listItem);
-    propertiesList[index].appendChild(listItem);
-
+    propertiesList.appendChild(listItem);
   }
 }

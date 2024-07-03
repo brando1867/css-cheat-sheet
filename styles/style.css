@@ -15,6 +15,13 @@ body {
   background: #E5E7EB;
   position: relative;
   /* height: 100%; */
+
+  font-family: "Helvetica Neue",
+    Arial,
+    "Hiragino Kaku Gothic ProN",
+    "Hiragino Sans",
+    Meiryo,
+    sans-serif;
 }
 
 @media (min-width: 1048px) {
@@ -158,74 +165,68 @@ body {
   }
 }
 
-/* container */
-.container {
-  display: grid;
-  grid-template-areas: 
-  "a"
-  "b"
-  "c"
-  "d"
-  "e"
-  "f";
-  grid-template-columns: 1fr;
-}
-
-@media (min-width: 844px) {
-  .container {
-    display: grid;
-    grid-template-areas: 
-    "a d "
-    "b e "
-    "c f ";
-    grid-template-columns: 1fr 1fr;
-  }
-}
-
-@media (min-width: 1454px) {
-  .container {
-    display: grid;
-    grid-template-areas: 
-    "a c e"
-    "b d f";
-    grid-template-columns: 1fr 1fr 1fr;
-    align-items: start;
-  }
-}
-
 /* properties */
 .properties {
   background: #fff;
   border-radius: 8px;
   padding: 16px;
+  width: 100%;
 }
 
-.properties--1 {
-  grid-area: a;
+.properties__item-parent {
+  /* width: calc((100% / 3) - 8px); */
+  width: 100%;
 } 
 
-.properties--2 {
-  grid-area: b;
-} 
-
-.properties--3 {
-  grid-area: c;
+.properties__item-parent--1 {
+  display: block;
 }
 
-.properties--4 {
-  grid-area: d;
+.properties__item-parent--2 {
+  display: none;
 }
 
-.properties--5 {
-  grid-area: e;
+.properties__item-parent--3 {
+  display: none;
 }
 
-.properties--6 {
-  grid-area: f;
+@media (min-width: 844px) {
+  .properties {
+    display: flex;
+    /* gap: 16px; */
+    justify-content: space-between;
+  }
+
+  .properties__item-parent {
+    width: calc((100% / 2) - 8px);
+  } 
+
+  .properties__item-parent--2 {
+    display: block;
+  }
+  
+  .properties__item-parent--3 {
+    display: none;
+  }
+}
+
+@media (min-width: 1048px) {
+  .properties__item-parent--3 {
+    display: block;
+  }
+
+  .properties__item-parent {
+    width: calc((100% / 3) - 8px);
+  } 
 }
 
 .properties__item {
   border-bottom: solid 1px #C7C7C7;
+}
+
+@media (min-width: 844px) {
+  .properties__item {
+  }
 }
 
 
@@ -300,6 +301,35 @@ body {
   gap: 8px;
 }
 
+/* col */
+.col {
+
+}
+
+.col--1 {
+  display: block;
+}
+
+.col--2 {
+  display: none;
+}
+
+.col--3 {
+  display: none;
+}
+
+@media (min-width: 844px) {
+  .col--2 {
+    display: block;
+  }
+}
+
+@media (min-width: 1048px) {
+  .col--3 {
+    display: block;
+  }
+}
+
 /* detail-title */
 .detail-title {
   color: #565656;
@@ -328,4 +358,15 @@ body {
   color: #000;
   background: #fff;
   padding: 4px;
+}
+
+/* break */
+.break {
+  flex-basis: 100%;
+  width: 0;
+}
+
+
+.hidden {
+  display: none;
 }
